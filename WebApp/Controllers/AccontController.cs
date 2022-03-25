@@ -8,10 +8,10 @@ namespace WebApp.Controllers
 {
     public class AccontController
     {
-        public List<User> cacheUsers { get; private set; }
+        public List<User> CacheUsers { get; private set; }
         public readonly SessionServices services = SessionServices.GetInstance;
         private User currentUser;
-        string sessionID;
+        private readonly string sessionID;
 
         public AccontController(string sessionID)
         {
@@ -20,7 +20,7 @@ namespace WebApp.Controllers
 
         public async Task LoadUsersData()
         {
-            cacheUsers = await services.getUsersAsync();
+            CacheUsers = await services.getUsersAsync();
         }
 
         public async Task<User> GetCurrentUser(string username)
@@ -47,7 +47,7 @@ namespace WebApp.Controllers
             {
                 return "käyttäjä id virheellinen";
             }
-            foreach (var user in cacheUsers)
+            foreach (var user in CacheUsers)
             {
                 if (user.Id == id)
                 {
@@ -103,7 +103,7 @@ namespace WebApp.Controllers
             {
                 return "Virhe käyttäjän valinnassa";
             }
-            foreach (var user in cacheUsers)
+            foreach (var user in CacheUsers)
             {
                 if (user.Id == id)
                 {
@@ -142,7 +142,7 @@ namespace WebApp.Controllers
             User newUser = null;
             if (int.TryParse(sId, out int id))
             {
-                foreach (var user in cacheUsers)
+                foreach (var user in CacheUsers)
                 {
                     if (user.Id == id)
                     {
@@ -220,7 +220,6 @@ namespace WebApp.Controllers
             }
 
         }
-
 
     }
 }

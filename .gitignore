@@ -8,3 +8,9 @@
 /packages
 /Services/bin/Debug
 /Services/obj/Debug
+/.vs/WebApp/DesignTimeBuild
+/.vs/WebApp/FileContentIndex
+/.vs/WebApp/v17/.futdcache.v1
+/DBContext/bin/Release/netstandard2.0
+/Services/bin/Release
+/Services/obj/Release

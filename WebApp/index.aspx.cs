@@ -36,7 +36,7 @@ namespace WebApp
         {
             await controller.LoadUsersData();
             ListBoxUsers.Items.Clear();
-            foreach (User user in controller.cacheUsers)
+            foreach (User user in controller.CacheUsers)
             {
                 var item = new ListItem()
                 {
@@ -53,7 +53,7 @@ namespace WebApp
             {
                 if (int.TryParse(ListBoxUsers.SelectedValue, out int id))
                 {
-                    var user = controller.cacheUsers.FirstOrDefault(x => x.Id == id);
+                    var user = controller.CacheUsers.FirstOrDefault(x => x.Id == id);
                     if (user != null)
                     {
                         TextBoxId.Text = user.Id.ToString();

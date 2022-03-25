@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DBContext
@@ -42,17 +39,10 @@ namespace DBContext
                 {
                     Entry(claim).State = EntityState.Detached;
                     Entry(claim).State = EntityState.Modified;
-
-                    //Claim oldclaim = await Claims.FirstOrDefaultAsync(x => x.Id == claim.Id);
-                    //if (oldclaim!= null)
-                    //{
-                    //    oldclaim.ClaimValue = claim.ClaimValue;
-                    //}
                 }
                 else
                 {
                     Entry(claim).State = EntityState.Added;
-                    //await AddAsync(claim);
                 }
 
                 await SaveChangesAsync();

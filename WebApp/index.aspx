@@ -15,6 +15,7 @@
                     <asp:TextBox ID="TextBoxCurrentUser" runat="server" Width="220px"></asp:TextBox>
                     <asp:Button ID="ButtonGetCurrentUser" runat="server" Text="Hae käyttäjä" OnClick="ButtonGetCurrenUser_ClickAsync" />
                     <asp:Button ID="ButtonRefresh" runat="server" Text="Päivitä" onClick="ButtonRefresh_ClickAsync"/>
+                    <asp:Button ID="ButtonSourceCode" runat="server" Text="Lähdekoodit" onClientClick='javascript:window.open("https://github.com/Kettja12/WebApp")'/>
                 </td>
             </tr>
             <tr>
