@@ -3,3 +3,8 @@
 ################################################################################
 
 /DBContext/bin/Debug
+/DBContext/obj/Debug
+/DBContext/obj
+/packages
+/Services/bin/Debug
+/Services/obj/Debug
