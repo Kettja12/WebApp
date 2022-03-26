@@ -14,3 +14,6 @@
 /DBContext/bin/Release/netstandard2.0
 /Services/bin/Release
 /Services/obj/Release
+/.vs/ProjectEvaluation
+/.vs/WebApp/v17
+/.vs/WebApp/config

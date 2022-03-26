@@ -69,6 +69,9 @@ namespace Services
         public string AddUser(Transaction transaction, User user)
         {
             user.Id = GetAddId();
+            if (user.Username == "") {
+                user.Username = "uusi (" + user.Id.ToString() + ")";
+            }
             var trUser = new TRUser(transaction, user, "A");
             userList.TryAdd(GetId(), trUser);
             return "";

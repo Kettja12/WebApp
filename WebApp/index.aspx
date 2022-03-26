@@ -15,7 +15,10 @@
                     <asp:TextBox ID="TextBoxCurrentUser" runat="server" Width="220px"></asp:TextBox>
                     <asp:Button ID="ButtonGetCurrentUser" runat="server" Text="Hae käyttäjä" OnClick="ButtonGetCurrenUser_ClickAsync" />
                     <asp:Button ID="ButtonRefresh" runat="server" Text="Päivitä" onClick="ButtonRefresh_ClickAsync"/>
-                    <asp:Button ID="ButtonSourceCode" runat="server" Text="Lähdekoodit" onClientClick='javascript:window.open("https://github.com/Kettja12/WebApp")'/>
+                    <button onclick='javascript:window.open("https://github.com/Kettja12/WebApp");return false'>Lähdekoodit</button>
+                    <button onclick='javascript:window.open("https://jarikettunen.ddns.net/data/SharedSessiondataTest.side");return false'>Selenium IDE testit</button>
+                    <button onclick='javascript:window.open("https://www.selenium.dev/selenium-ide/");return false'>Selenium IDE laajennus selaimeen</button>
+                    
                 </td>
             </tr>
             <tr>

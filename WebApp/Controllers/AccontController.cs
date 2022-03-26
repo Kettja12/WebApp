@@ -147,7 +147,7 @@ namespace WebApp.Controllers
                     if (user.Id == id)
                     {
                         newUser = user.Clone();
-                        newUser.Username = StringExtensions.RandomString(10);
+                        newUser.Username = "";
                         break;
                     }
                 }

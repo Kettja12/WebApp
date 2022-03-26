@@ -1,0 +1,384 @@
+{
+  "id": "cff8331c-ba63-4ccf-abce-6bca430475dd",
+  "version": "2.0",
+  "name": "Shared sessiondata test",
+  "url": "https://jarikettunen.ddns.net",
+  "tests": [{
+    "id": "054ce07d-eaae-45b0-981e-a3cb985d1d67",
+    "name": "Muokkaa ja tallenna vanha käyttäjä",
+    "commands": [{
+      "id": "cf4658b5-b80d-47c4-b404-13b27f5bf070",
+      "comment": "",
+      "command": "open",
+      "target": "/webapp/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bfec900b-2ff8-442d-8b9e-348a36e9a53f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1341x967",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0496e580-267c-4a09-8549-45dcffede007",
+      "comment": "",
+      "command": "click",
+      "target": "id=TextBoxCurrentUser",
+      "targets": [
+        ["id=TextBoxCurrentUser", "id"],
+        ["name=TextBoxCurrentUser", "name"],
+        ["css=#TextBoxCurrentUser", "css:finder"],
+        ["xpath=//input[@id='TextBoxCurrentUser']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d827b08-58e2-436c-af91-b6a72d471a5d",
+      "comment": "",
+      "command": "type",
+      "target": "id=TextBoxCurrentUser",
+      "targets": [
+        ["id=TextBoxCurrentUser", "id"],
+        ["name=TextBoxCurrentUser", "name"],
+        ["css=#TextBoxCurrentUser", "css:finder"],
+        ["xpath=//input[@id='TextBoxCurrentUser']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "Jari"
+    }, {
+      "id": "15735c98-43df-4642-ba2c-7d044c695956",
+      "comment": "",
+      "command": "click",
+      "target": "css=table:nth-child(4) > tbody > tr > td:nth-child(2)",
+      "targets": [
+        ["css=table:nth-child(4) > tbody > tr > td:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]", "xpath:idRelative"],
+        ["xpath=//td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "746aff56-7c95-4eba-85f5-ab31d0190065",
+      "comment": "",
+      "command": "click",
+      "target": "id=ButtonGetCurrentUser",
+      "targets": [
+        ["id=ButtonGetCurrentUser", "id"],
+        ["name=ButtonGetCurrentUser", "name"],
+        ["css=#ButtonGetCurrentUser", "css:finder"],
+        ["xpath=//input[@id='ButtonGetCurrentUser']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr/td/input[2]", "xpath:idRelative"],
+        ["xpath=//td/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "31efefa4-34de-47a5-b56a-0764f5817311",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=jari"
+    }, {
+      "id": "b37fc7a5-4792-4383-8e36-4fc0156ea07f",
+      "comment": "",
+      "command": "click",
+      "target": "css=option:nth-child(1)",
+      "targets": [
+        ["css=option:nth-child(1)", "css:finder"],
+        ["xpath=//option[@value='1']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option", "xpath:idRelative"],
+        ["xpath=//option", "xpath:position"],
+        ["xpath=//option[contains(.,'jari')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4b0da07f-4775-4565-9fab-c22f24a0ee56",
+      "comment": "",
+      "command": "click",
+      "target": "id=TextBoxLastname",
+      "targets": [
+        ["id=TextBoxLastname", "id"],
+        ["name=TextBoxLastname", "name"],
+        ["css=#TextBoxLastname", "css:finder"],
+        ["xpath=//input[@id='TextBoxLastname']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1aefadcc-55ca-4cdf-8fc4-06f979989bd9",
+      "comment": "",
+      "command": "type",
+      "target": "id=TextBoxLastname",
+      "targets": [
+        ["id=TextBoxLastname", "id"],
+        ["name=TextBoxLastname", "name"],
+        ["css=#TextBoxLastname", "css:finder"],
+        ["xpath=//input[@id='TextBoxLastname']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": "Kettunen 2"
+    }, {
+      "id": "6face508-fef6-47fa-87d9-665a8d12c818",
+      "comment": "",
+      "command": "click",
+      "target": "id=form1",
+      "targets": [
+        ["id=form1", "id"],
+        ["css=#form1", "css:finder"],
+        ["xpath=//form[@id='form1']", "xpath:attributes"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ec17cd0e-917c-4bc3-8352-a6eb01208dbe",
+      "comment": "",
+      "command": "click",
+      "target": "id=ButtonSave",
+      "targets": [
+        ["id=ButtonSave", "id"],
+        ["name=ButtonSave", "name"],
+        ["css=#ButtonSave", "css:finder"],
+        ["xpath=//input[@id='ButtonSave']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[6]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c67bac3e-1877-4f22-945d-c1641d22e7ef",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=abc"
+    }, {
+      "id": "0218df0b-c89d-4580-9fd2-ee27bba5a479",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(2)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(2)", "css:finder"],
+        ["xpath=//option[@value='8']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option[2]", "xpath:idRelative"],
+        ["xpath=//option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'abc')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "14e4da9c-39b2-4575-b93b-afb538bb0ca5",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=jari"
+    }, {
+      "id": "b0a42b93-8f41-4809-90b4-0438d36dda9c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(1)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(1)", "css:finder"],
+        ["xpath=//option[@value='1']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option", "xpath:idRelative"],
+        ["xpath=//option", "xpath:position"],
+        ["xpath=//option[contains(.,'jari')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "97fd3b23-85f0-4c37-872c-c07dd968a731",
+      "comment": "",
+      "command": "click",
+      "target": "id=TextBoxLastname",
+      "targets": [
+        ["id=TextBoxLastname", "id"],
+        ["name=TextBoxLastname", "name"],
+        ["css=#TextBoxLastname", "css:finder"],
+        ["xpath=//input[@id='TextBoxLastname']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cebc3e24-8913-44a9-9990-4d3c15b6fad0",
+      "comment": "",
+      "command": "type",
+      "target": "id=TextBoxLastname",
+      "targets": [
+        ["id=TextBoxLastname", "id"],
+        ["name=TextBoxLastname", "name"],
+        ["css=#TextBoxLastname", "css:finder"],
+        ["xpath=//input[@id='TextBoxLastname']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": "Kettunen 23"
+    }, {
+      "id": "df33f377-4710-4d9c-8f5b-a29406bf4154",
+      "comment": "",
+      "command": "click",
+      "target": "id=form1",
+      "targets": [
+        ["id=form1", "id"],
+        ["css=#form1", "css:finder"],
+        ["xpath=//form[@id='form1']", "xpath:attributes"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89232787-0c35-4be6-b49d-65d76802ea47",
+      "comment": "",
+      "command": "click",
+      "target": "id=ButtonSave",
+      "targets": [
+        ["id=ButtonSave", "id"],
+        ["name=ButtonSave", "name"],
+        ["css=#ButtonSave", "css:finder"],
+        ["xpath=//input[@id='ButtonSave']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[6]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f0ae1c7f-a4a1-44a4-a64b-51139df08012",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=jari"
+    }, {
+      "id": "34e0d2aa-a853-4b9d-bc49-91fa8d821623",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(1)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(1)", "css:finder"],
+        ["xpath=//option[@value='1']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option", "xpath:idRelative"],
+        ["xpath=//option", "xpath:position"],
+        ["xpath=//option[contains(.,'jari')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbb76da5-f3ff-44a7-9d4e-dd6a75f0ba2f",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=abc"
+    }, {
+      "id": "49e8bf9d-a82d-46aa-bd47-b64a6a8d422c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(2)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(2)", "css:finder"],
+        ["xpath=//option[@value='8']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option[2]", "xpath:idRelative"],
+        ["xpath=//option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'abc')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "820a1df6-1fd0-4e85-b41c-b8e583be35e6",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=jari"
+    }, {
+      "id": "9299bd09-88dc-4fc5-b1a4-fabb0464b769",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(1)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(1)", "css:finder"],
+        ["xpath=//option[@value='1']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option", "xpath:idRelative"],
+        ["xpath=//option", "xpath:position"],
+        ["xpath=//option[contains(.,'jari')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "389a2084-14d4-4f07-b1f4-1d73f48e4a29",
+      "comment": "",
+      "command": "click",
+      "target": "id=ButtonUndo",
+      "targets": [
+        ["id=ButtonUndo", "id"],
+        ["name=ButtonUndo", "name"],
+        ["css=#ButtonUndo", "css:finder"],
+        ["xpath=//input[@id='ButtonUndo']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[6]/td[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//td[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d690bbfb-9b7f-47ed-a875-bf28e80df194",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=abc"
+    }, {
+      "id": "68ae997b-b485-4a89-8686-0228d5f80924",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(2)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(2)", "css:finder"],
+        ["xpath=//option[@value='8']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option[2]", "xpath:idRelative"],
+        ["xpath=//option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'abc')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2416d4e-db60-4154-9d6f-fd31122acd2f",
+      "comment": "",
+      "command": "select",
+      "target": "id=ListBoxUsers",
+      "targets": [],
+      "value": "label=jari"
+    }, {
+      "id": "298236c3-15c0-4048-ac02-d6960244ec8b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#ListBoxUsers > option:nth-child(1)",
+      "targets": [
+        ["css=#ListBoxUsers > option:nth-child(1)", "css:finder"],
+        ["xpath=//option[@value='1']", "xpath:attributes"],
+        ["xpath=//select[@id='ListBoxUsers']/option", "xpath:idRelative"],
+        ["xpath=//option", "xpath:position"],
+        ["xpath=//option[contains(.,'jari')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c11408c6-24f9-4f18-b973-1a8b5e57fa65",
+      "comment": "",
+      "command": "click",
+      "target": "id=ButtonSaveToDb",
+      "targets": [
+        ["id=ButtonSaveToDb", "id"],
+        ["name=ButtonSaveToDb", "name"],
+        ["css=#ButtonSaveToDb", "css:finder"],
+        ["xpath=//input[@id='ButtonSaveToDb']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/table/tbody/tr[3]/td[2]/table/tbody/tr[7]/td[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//td[2]/input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1eaab26a-4b69-4d4d-8c19-a3f98e8d9053",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["054ce07d-eaae-45b0-981e-a3cb985d1d67"]
+  }],
+  "urls": ["https://jarikettunen.ddns.net/"],
+  "plugins": []
+}

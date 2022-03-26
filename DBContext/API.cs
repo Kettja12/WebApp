@@ -24,7 +24,11 @@ namespace DBContext
             await SaveChangesAsync();
             foreach (var claim in user.Claims)
             {
-                claim.UserId = user.Id;
+                if (claim.UserId != user.Id)
+                {
+                    claim.UserId = user.Id;
+                    claim.Id = 0;
+                }
                 Claim newclaim = await SaveClaimAsync(
                     claim);
             }
