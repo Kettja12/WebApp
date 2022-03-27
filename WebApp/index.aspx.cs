@@ -122,6 +122,7 @@ namespace WebApp
         protected async void ButtonDelete_ClickAsync(object sender, EventArgs e)
         {
             LabelErrorMessage.Text = controller.DeleteUser(TextBoxId.Text);
+            ButtonClear_Click(sender, e);
             await Refresh();
         }
 
@@ -174,6 +175,14 @@ namespace WebApp
             await Refresh();
 
         }
+        protected async void ButtonAddClaim_ClickAsync(object sender, EventArgs e)
+        {
+            LabelErrorMessage.Text = await controller.AddUserClaimAsync(TextBoxId.Text,TextBoxClaim.Text);
+            TextBoxClaim.Text = "";
+            await Refresh();
+        }
+
+
 
     }
 }

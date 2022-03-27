@@ -79,6 +79,8 @@
                             <td>
                                 <asp:ListBox ID="ListBoxClaims" runat="server" Width="300px"
                                     AutoPostBack="true"></asp:ListBox>
+                                <asp:TextBox ID="TextBoxClaim" runat="server" Width="220px"></asp:TextBox>
+                                <asp:Button ID="ButtonAddClaim" runat="server" Text="lisää claim" OnClick="ButtonAddClaim_ClickAsync" />
                             </td>
                         </tr>
 

@@ -2,6 +2,7 @@
 using Services;
 using Services.Extenders;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebApp.Controllers
@@ -20,7 +21,7 @@ namespace WebApp.Controllers
 
         public async Task LoadUsersData()
         {
-            CacheUsers = await services.getUsersAsync();
+            CacheUsers = await services.GetUsersAsync();
         }
 
         public async Task<User> GetCurrentUser(string username)
@@ -99,7 +100,7 @@ namespace WebApp.Controllers
             {
                 return "Käyttäjätietoa ei valittu";
             }
-            if (int.TryParse(sId, out int id)==false)
+            if (int.TryParse(sId, out int id) == false)
             {
                 return "Virhe käyttäjän valinnassa";
             }
@@ -128,6 +129,42 @@ namespace WebApp.Controllers
             }
             return string.Empty;
         }
+
+        public async Task<string> AddUserClaimAsync(
+            string sid,
+            string claimValue)
+        {
+            if (int.TryParse(sid, out int id))
+            {
+                var user = CacheUsers.FirstOrDefault(x => x.Id == id);
+                if (user == null)
+                {
+                    return "Muutoksen luonti virhe";
+                }
+                var clone = user.Clone();
+                var transaction = services.StartTransaction(
+                    sessionID,
+                    currentUser.Username);
+                if (transaction != null)
+                {
+                    clone.Claims.Add(new Claim()
+                    {
+                        Id = services.GetAddId(),
+                        UserId=clone.Id,
+                        ClaimType = "uusi",
+                        ClaimValue = claimValue
+                    });
+                    var result = services.SetUser(transaction, clone);
+                    if (result != "")
+                    {
+                        services.RollbackTransaction(transaction);
+                    }
+                    return result;
+                }
+            }
+            return "Muutoksen luonti virhe";
+        }
+
 
         public async Task<string> AddUserAsync(
             string sId,
@@ -179,7 +216,7 @@ namespace WebApp.Controllers
                 services.RollbackTransaction(transaction);
             }
             return result;
-     
+
         }
         public async Task<string> SavetoDbAllTransactionsAsync()
         {

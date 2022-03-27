@@ -22,16 +22,6 @@ namespace DBContext
                 Entry(user).State = EntityState.Modified;
             }
             await SaveChangesAsync();
-            foreach (var claim in user.Claims)
-            {
-                if (claim.UserId != user.Id)
-                {
-                    claim.UserId = user.Id;
-                    claim.Id = 0;
-                }
-                Claim newclaim = await SaveClaimAsync(
-                    claim);
-            }
             return user;
         }
 
@@ -46,6 +36,7 @@ namespace DBContext
                 }
                 else
                 {
+                    claim.Id = 0;
                     Entry(claim).State = EntityState.Added;
                 }
 

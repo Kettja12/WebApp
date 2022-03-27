@@ -9,7 +9,11 @@ namespace Services
         public object lockObj = new object();
         public readonly ConcurrentDictionary<int,Transaction> transactions =
             new ConcurrentDictionary<int,Transaction>();
-        private readonly ConcurrentDictionary<int,TRUser> userList = 
-            new ConcurrentDictionary<int,TRUser>();
+        private readonly ConcurrentDictionary<int, TRItem> insertedList =
+            new ConcurrentDictionary<int, TRItem>();
+        private readonly ConcurrentDictionary<int, TRItem> modifiedList =
+            new ConcurrentDictionary<int, TRItem>();
+        private readonly ConcurrentDictionary<int, TRItem> deletedList =
+            new ConcurrentDictionary<int, TRItem>();
     }
 }

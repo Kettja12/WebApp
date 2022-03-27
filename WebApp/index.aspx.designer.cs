@@ -159,6 +159,24 @@ namespace WebApp
         protected global::System.Web.UI.WebControls.ListBox ListBoxClaims;
 
         /// <summary>
+        /// TextBoxClaim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxClaim;
+
+        /// <summary>
+        /// ButtonAddClaim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonAddClaim;
+
+        /// <summary>
         /// ButtonSave control.
         /// </summary>
         /// <remarks>

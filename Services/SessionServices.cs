@@ -1,4 +1,5 @@
 ﻿using DBContext;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace Services
         {
             var tr = transactions.Where(x => x.Value.SessionID == session)
                 .OrderByDescending(x => x.Key).FirstOrDefault();
-            if (RemoveUserTransaction(tr.Value))
+            if (RemoveTransaction(tr.Value))
             {
                 if (transactions.TryRemove(tr.Key, out Transaction trvalue))
                     return true;
@@ -108,7 +109,7 @@ namespace Services
                 .OrderByDescending(x => x.Key);
             foreach (var tr in trs)
             {
-                if (RemoveUserTransaction(tr.Value))
+                if (RemoveTransaction(tr.Value))
                 {
                     if (transactions.TryRemove(tr.Key, out Transaction trvalue)==false)
                         return false;
@@ -126,29 +127,75 @@ namespace Services
                 .OrderBy(x => x.Key).ToList();
             foreach (var tr in trs)
             {
-                if (await SaveToDbTransaction(tr.Value, newIds) == false)
-                    return false;
+                newIds = await SaveToDbTransaction(tr.Value, newIds);
+                if (newIds==null) return false;
             }
             UndoAllTransaction(session);
             return true;
         }
 
-        public async Task<bool> SaveToDbTransaction(Transaction transaction,
+        public async Task<Dictionary<int, int>> SaveToDbTransaction(Transaction transaction,
             Dictionary<int, int> newIds)
         {
             using (HelloContext context = new HelloContext(connectionString))
             {
                 using (var tr = await context.Database.BeginTransactionAsync())
                 {
-                        var result = await SaveUsersToDb(context, transaction,newIds);
-                        if (result)
+                        newIds = await SaveUsersToDb(context, transaction,newIds);
+                        if (newIds!=null)
                             context.Database.CommitTransaction();
                         else
                             context.Database.RollbackTransaction();
-                        return result;
+                        return newIds;
                 }
             }
         }
- 
+        public bool RemoveTransaction(Transaction transaction)
+        {
+            return RemoveInsetedTransaction(transaction)
+                && RemoveModifiedTransaction(transaction)
+                && RemoveDeletedTransaction(transaction);
+        }
+        private bool RemoveInsetedTransaction(Transaction transaction)
+        {
+            IEnumerable<KeyValuePair<int, TRItem>> items = insertedList
+                .Where(x => x.Value.Transaction.Id == transaction.Id).ToList();
+            foreach (var item in items)
+            {
+                if (insertedList.TryRemove(item.Key, out TRItem trUser) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private bool RemoveModifiedTransaction(Transaction transaction)
+        {
+            IEnumerable<KeyValuePair<int, TRItem>> items = modifiedList
+                .Where(x => x.Value.Transaction.Id == transaction.Id).ToList();
+            foreach (var item in items)
+            {
+                if (modifiedList.TryRemove(item.Key, out TRItem trUser) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private bool RemoveDeletedTransaction(Transaction transaction)
+        {
+            IEnumerable<KeyValuePair<int, TRItem>> items = deletedList
+                .Where(x => x.Value.Transaction.Id == transaction.Id).ToList();
+            foreach (var item in items)
+            {
+                if (deletedList.TryRemove(item.Key, out TRItem trUser) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
     }
 }
