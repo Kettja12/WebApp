@@ -130,7 +130,7 @@ namespace WebApp.Controllers
             return string.Empty;
         }
 
-        public async Task<string> AddUserClaimAsync(
+        public string AddUserClaim(
             string sid,
             string claimValue)
         {
@@ -150,7 +150,7 @@ namespace WebApp.Controllers
                     clone.Claims.Add(new Claim()
                     {
                         Id = services.GetAddId(),
-                        UserId=clone.Id,
+                        UserId = clone.Id,
                         ClaimType = "uusi",
                         ClaimValue = claimValue
                     });

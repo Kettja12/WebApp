@@ -177,7 +177,7 @@ namespace WebApp
         }
         protected async void ButtonAddClaim_ClickAsync(object sender, EventArgs e)
         {
-            LabelErrorMessage.Text = await controller.AddUserClaimAsync(TextBoxId.Text,TextBoxClaim.Text);
+            LabelErrorMessage.Text = controller.AddUserClaim(TextBoxId.Text,TextBoxClaim.Text);
             TextBoxClaim.Text = "";
             await Refresh();
         }
