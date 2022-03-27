@@ -88,7 +88,7 @@ namespace Services
         }
         public async Task<List<User>> GetUsersAsync()
         {
-            using (var context = new HelloContext(connectionString))
+            using (var context = new HelloContext(ConnectionString))
             {
 
                 List<User> usersFromdb = null;
@@ -222,7 +222,7 @@ namespace Services
 
         public async Task<User> GetUserByUserName(string username)
         {
-            using (var context = new HelloContext(connectionString))
+            using (var context = new HelloContext(ConnectionString))
             {
                 var user = await context.Users
                     .FirstOrDefaultAsync(x => x.Username == username);

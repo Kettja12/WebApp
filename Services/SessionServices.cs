@@ -7,12 +7,21 @@ using System.Threading.Tasks;
 
 namespace Services
 {
+
+    /// <summary>
+    /// Luokka hallitsee kaikkia sovelluksen käyttäjien tekemiä muutoksia
+    /// ja palauttaa tiedot tietokannasta  ja huolehtii niiden tallenuksesta tietokantaan.
+    /// ja tarjoaa muutettuja/lisättyjä  sessions.cs tiedosssa olevein rakenteiden avulla.
+    /// </summary>
     public partial class SessionServices
     {
-        protected string connectionString { get; private set; }
+        protected string ConnectionString { get; private set; }
+        // transactio laskuri käytetään threadsafe funtioden kautt
         private int counter;
+        // Cacheen viedyt lisätut tietuee saavat  yksiäösitteisen avaimen
+        // Joka sitten tallennuksen yhteydessä vaihtuu kanna avaimeen.
         private int addCounter;
-
+        //Kaikille käyttäjille näkyvyys toteutaan singelton instanssin avulla
         private static SessionServices instance = null;
         public static SessionServices GetInstance
         {
@@ -27,16 +36,13 @@ namespace Services
         private SessionServices()
         {
         }
+        //tietokanta yhteys alustetaan global.aspx.cs teidosssa.  
         public void SetConnectionString(string connectionString)
         {
-            this.connectionString = connectionString;
+            this.ConnectionString = connectionString;
         }
 
-        public void PrintDetails(string message)
-        {
-            Console.WriteLine(message);
-        }
-
+        //TreadSafe funtion avaimille
         public int GetId()
         {
             int result = 0;
@@ -48,6 +54,7 @@ namespace Services
             return result;
         }
 
+        //TreadSafe funtion avaimille
         public int GetAddId()
         {
             int result = 0;
@@ -58,11 +65,12 @@ namespace Services
             }
             return result;
         }
-
-        public SessionServices(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        /// <summary>
+        /// Transaction alustus uksikäsiteisillä tiedoilla  
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public Transaction StartTransaction(string sessionID, string username)
         {
             var newId = GetId();
@@ -71,12 +79,21 @@ namespace Services
             return transaction;
 
         }
+
+        
+        /// 
+        /// <summary>
+        /// Transaction poisto 
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public bool RollbackTransaction(Transaction transaction)
         {
-            if (transactions.TryRemove(transaction.Id, out transaction))
+            if (RemoveTransaction(transaction))
             {
-                return true;
-            }
+                if (transactions.TryRemove(transaction.Id, out Transaction trvalue))
+                    return true;
+            };
             return false;
         }
 
@@ -85,12 +102,17 @@ namespace Services
             return transactions.FirstOrDefault(x => x.Key == id).Value;
         }
 
+        /// <summary>
+        /// Muutosten määrä istuntokohtaisesti
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public int GetSessionTransactionCount(string session)
         {
             return transactions.Where(x => x.Value.SessionID == session).Count();
         }
 
-        public bool UndoTransaction(string session)
+        public bool UndoLastTransaction(string session)
         {
             var tr = transactions.Where(x => x.Value.SessionID == session)
                 .OrderByDescending(x => x.Key).FirstOrDefault();
@@ -103,7 +125,7 @@ namespace Services
             return false;
         }
 
-        public bool UndoAllTransaction(string session)
+        public bool UndoAllTransactions(string session)
         {
             var trs = transactions.Where(x => x.Value.SessionID == session)
                 .OrderByDescending(x => x.Key);
@@ -130,14 +152,14 @@ namespace Services
                 newIds = await SaveToDbTransaction(tr.Value, newIds);
                 if (newIds==null) return false;
             }
-            UndoAllTransaction(session);
+            UndoAllTransactions(session);
             return true;
         }
 
         public async Task<Dictionary<int, int>> SaveToDbTransaction(Transaction transaction,
             Dictionary<int, int> newIds)
         {
-            using (HelloContext context = new HelloContext(connectionString))
+            using (HelloContext context = new HelloContext(ConnectionString))
             {
                 using (var tr = await context.Database.BeginTransactionAsync())
                 {

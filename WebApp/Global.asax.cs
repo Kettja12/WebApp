@@ -18,7 +18,7 @@ namespace WebApp
         void Session_End(object sender, EventArgs e)
         {
             var services = SessionServices.GetInstance;
-            services.UndoAllTransaction(Session.SessionID);
+            services.UndoAllTransactions(Session.SessionID);
         }
     }
 }

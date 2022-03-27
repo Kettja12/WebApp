@@ -7,33 +7,68 @@ using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Luokka jolla ylläpidetään käyttäjään liittyviä tietoja.
+    /// Ja tarjotaan niitä käyttöliittymä luokalle.
+    /// voisi olla muitakin rakanteita joita käsitellään samalla
+    /// Jokainen aspx-sivun ei vältämätä tarvitse omaa kontrollia mutta 
+    /// Karkesti yleistäen on kuitenkin MVC mallista  M ja C
+    /// </summary>
     public class AccontController
     {
+        // Data voidaan hakea kannasta jokakerta tai sitten käyttää 
+        // sisäsitä  cache rakennetta. että tieto on vain  tietyn ajan hetken kata tietoo. 
         public List<User> CacheUsers { get; private set; }
+        // Tässä rakenteessa on perustieto kaikien käyttäjien tekemistä muutoksita
+        // joita ei ole tallennettu kantaan. Huomaa Singelton toteutus.
         public readonly SessionServices services = SessionServices.GetInstance;
+        //Koska rakenne on sessiokohtainen  niin  kun käyttäjä tieto pitää kerrna asettaa.
+        //Ei tehdä sitä erikseen session vain  luokansisään. JOs toinen controller luokka  tarvitsee tietoa
+        //Se voi kaivaa sessiosta AccontController luokan kja kaivaa tiedosot siitä 
         private User currentUser;
+        // Kaikki luokan muutokset menee sesssioID muuttujan taakse.
         private readonly string sessionID;
 
         public AccontController(string sessionID)
         {
             this.sessionID = sessionID;
         }
-
+        /// <summary>
+        /// Käytttäjätiedot hataan services instansin kautta.
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadUsersData()
         {
             CacheUsers = await services.GetUsersAsync();
         }
 
+        /// <summary>
+        /// Ykisttäisen  käyttäjän tietojen haki ja samalla asetetaan käyttäjätiedot kuikaan 
+        /// currenUser muutujaan.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public async Task<User> GetCurrentUser(string username)
         {
             currentUser = await services.GetUserByUserName(username);
             return currentUser;
         }
 
+        /// <summary>
+        /// Muutosten määrä haetaan services luokasta.
+        /// </summary>
         public string TransactionCount
         {
             get { return services.GetSessionTransactionCount(sessionID).ToString(); }
         }
+        /// <summary>
+        /// Köyttäjän tietojen muutoksen tallennus käyttöliittymästä
+        /// </summary>
+        /// <param name="sId"></param>
+        /// <param name="username"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
         public async Task<string> SaveUserAsync(
             string sId,
             string username,
@@ -48,15 +83,19 @@ namespace WebApp.Controllers
             {
                 return "käyttäjä id virheellinen";
             }
+            //Kaivetaan käyttäjä cachehessä. Kun on muutos on oltava olemassa.
             foreach (var user in CacheUsers)
             {
                 if (user.Id == id)
                 {
+                    // Pientä tarksitusta jos käyttäjätunnusta on muutettu pitää tarksitaa
+                    // Onko muutettu tunnus käytössä
                     var user2 = await services.GetUserByUserName(username);
                     if (user2 != null && user.Id != user2.Id)
                     {
                         return "Käyttäjätunnus käytössä jo toisella käyttäjällä";
                     }
+                    // Luodaan käyttäliittumän tiedoista  uusi käyttäjä vertailua varten.
                     var saveUser = new User()
                     {
                         Id = id,
@@ -64,14 +103,20 @@ namespace WebApp.Controllers
                         FirstName = firstName,
                         LastName = lastName
                     };
+                    // Tehdäään kopio aikaisemmista tiedoista.
                     var clone = user.Clone();
+                    //Tallenetaan kopionn muuttuneet tiedot ja jos tiedot on oikeasti muutuneet 
+                    // niin mennään lohkoon
                     if (clone.IsModified(saveUser))
                     {
+                        // Luodaan transactio joka on muutoksen juutisolu johon sitten
+                        // liitetään varsinaiset muutokset 
                         var transaction = services.StartTransaction(
                                 sessionID,
                                 currentUser.Username);
                         if (transaction != null)
                         {
+                            //Lisätään käyttäjä muutos transalcvioon ja jos se epäonnistuu perutaan koko transactio
                             var result = services.SetUser(transaction, clone);
                             if (result != "")
                             {
@@ -93,6 +138,11 @@ namespace WebApp.Controllers
             return string.Empty;
         }
 
+        /// <summary>
+        /// Käyttäjän poisto oma transactionsa tarvitaan vain käyttäjä id
+        /// </summary>
+        /// <param name="sId"></param>
+        /// <returns></returns>
         public string DeleteUser(
             string sId)
         {
@@ -129,7 +179,13 @@ namespace WebApp.Controllers
             }
             return string.Empty;
         }
-
+        /// <summary>
+        /// Käyttäjän claims alitauluun tähtävä muutos  on periaattessa käyttäjä-taulun transactio
+        /// Jöhon otetaan kopio viimeisimmästä käyttäjätiedoista ja lisätään sen  claimseihin rivi.
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="claimValue"></param>
+        /// <returns></returns>
         public string AddUserClaim(
             string sid,
             string claimValue)
@@ -165,7 +221,15 @@ namespace WebApp.Controllers
             return "Muutoksen luonti virhe";
         }
 
-
+        /// <summary>
+        /// Käyttäjätietojen lisäys haetaan pohjaksi 
+        /// jos  parametrina saadaan käyttäjän ID 
+        /// </summary>
+        /// <param name="sId"></param>
+        /// <param name="username"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
         public async Task<string> AddUserAsync(
             string sId,
             string username,
@@ -210,6 +274,7 @@ namespace WebApp.Controllers
             {
                 return "Muutoksen luonti virhe";
             }
+            // käytetään add metodia ei set metodia jota käytettiin muutos tilanteessa.
             var result = services.AddUser(transaction, newUser);
             if (result != "")
             {
@@ -218,6 +283,11 @@ namespace WebApp.Controllers
             return result;
 
         }
+
+        /// <summary>
+        /// Kaikkien session transactionden tallennus kantaan
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> SavetoDbAllTransactionsAsync()
         {
 
@@ -231,10 +301,13 @@ namespace WebApp.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Kaikkien session transactioden peruminen.
+        /// </summary>
+        /// <returns></returns>
         public string UndoAllTransaction()
         {
-            if (services.UndoAllTransaction(sessionID))
+            if (services.UndoAllTransactions(sessionID))
             {
                 return "Muutosten peruminen onnistui";
             }
@@ -244,10 +317,13 @@ namespace WebApp.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Viimeisimmän transaction periminen
+        /// </summary>
+        /// <returns></returns>
         public string UndoTransaction()
         {
-            if (services.UndoTransaction(sessionID))
+            if (services.UndoLastTransaction(sessionID))
             {
                 return "Muutoksen peruminen onnistui";
             }
